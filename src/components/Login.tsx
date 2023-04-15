@@ -1,17 +1,35 @@
 import "../style/Login.scss";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { loginUser } from "../store/actions/userActions";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
 
 export default function Login() {
+  const { isLogin } = useSelector((state: any) => state.user);
+  const dispatch: any = useDispatch();
   const [username, setUsername] = useState("");
   const [userPassword, setUserPassword] = useState("");
-  const onSubmitLogin = (event:any)=>{
-    event.preventDefault()
-    console.log(event)
-    console.log(username,userPassword)
-  }
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isLogin) {
+      navigate("/dashboard");
+    }
+  }, [isLogin]);
+
+  const onSubmitLogin = (event: any) => {
+    event.preventDefault();
+    dispatch(
+      loginUser({
+        username: username,
+        password: userPassword,
+      })
+    );
+  };
 
   return (
     <div className="container">
+      <pre>{isLogin.toString()}</pre>
       <div className="card">
         <div className="title">Login</div>
         <form action="">
@@ -27,9 +45,13 @@ export default function Login() {
           </div>
           <div>
             <label htmlFor="">Password</label>
-            <input type="password" onChange={(event) => {
+            <input
+              type="password"
+              onChange={(event) => {
                 setUserPassword(event.target.value);
-              }} value={userPassword} />
+              }}
+              value={userPassword}
+            />
           </div>
           <button onClick={onSubmitLogin}>Submit</button>
           <small>
