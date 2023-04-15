@@ -1,37 +1,34 @@
-import "../style/Login.scss";
+import "../style/Register.scss";
 import { useState, useEffect } from "react";
-import { loginUser } from "../store/actions/userActions";
+import { loginUser, registerUser } from "../store/actions/userActions";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 
-export default function Login() {
+export default function Register() {
   const { isLogin } = useSelector((state: any) => state.user);
   const dispatch: any = useDispatch();
   const [username, setUsername] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (isLogin) {
-      navigate("/dashboard");
-    }
-  }, [isLogin]);
-
-  const onSubmitLogin = (event: any) => {
+  const onSubmitRegister = (event: any) => {
     event.preventDefault();
     dispatch(
-      loginUser({
+      registerUser({
         username: username,
         password: userPassword,
       })
     );
   };
 
+  const navigateToLogin = ()=>{
+    navigate("/")
+  }
+
   return (
     <div className="container">
-      <pre>{isLogin.toString()}</pre>
       <div className="card">
-        <div className="title">Login</div>
+        <div className="title">Register</div>
         <form action="">
           <div>
             <label htmlFor="">Username</label>
@@ -53,9 +50,9 @@ export default function Login() {
               value={userPassword}
             />
           </div>
-          <button onClick={onSubmitLogin}>Submit</button>
+          <button onClick={onSubmitRegister}>Submit</button>
           <small>
-            Don't have account ? <span>Sign Up</span>{" "}
+           Already have an account ? <span onClick={navigateToLogin}>Sign in</span>{" "}
           </small>
         </form>
       </div>

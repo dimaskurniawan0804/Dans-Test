@@ -18,10 +18,32 @@ export function loginUser(payload: TLoginData) {
       const { data } = await axios.post(`${baseUrl}/users/login`, payload);
 
       if (data) {
+        localStorage.setItem("access_token", data);
         return dispatch(updateLoginState({ isLogin: true }));
       }
     } catch (error) {
       return dispatch(updateLoginState({ isLogin: false }));
+    }
+  };
+}
+
+export function logout() {
+  return async (dispatch: any) => {
+    dispatch(updateLoginState({ isLogin: false }));
+    localStorage.removeItem("access_token");
+  };
+}
+
+export function registerUser(payload: TLoginData) {
+  return async (dispatch: any) => {
+    try {
+      const { data } = await axios.post(`${baseUrl}/users/register`, payload);
+
+      if (data) {
+        dispatch(loginUser(payload));
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 }
