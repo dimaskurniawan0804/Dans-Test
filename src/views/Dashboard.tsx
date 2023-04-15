@@ -1,20 +1,32 @@
 import { useNavigate } from "react-router";
 import { logout } from "../store/actions/userActions";
 import { useSelector, useDispatch } from "react-redux";
+import { getJobList } from "../store/actions/jobActions";
 import "../style/Dashboard.scss";
+import { useState, useEffect } from "react";
 
 export default function Dashboard() {
   const navigate = useNavigate();
+  const {jobList} = useSelector((state:any)=>state.job)
   const dispatch: any = useDispatch();
   const test = () => {
     navigate("/");
     dispatch(logout());
   };
   const items = [1, 2, 3, 4, 5];
+  const [isJobListLoaded, setIsJobListLoaded] = useState(false);
+  useEffect(()=>{
+    dispatch(getJobList())
+  },[])
+  useEffect(()=>{
+    if(jobList.length > 0){
+        setIsJobListLoaded(true)
+    }
+  },[jobList])
   return (
     <div id="dashboard">
       <div className="navbar">
-        <p>Github Jobs</p>
+        <p>Github <span>Jobs</span></p>
       </div>
       <div className="filter-area">
         <div className="input">
@@ -35,17 +47,17 @@ export default function Dashboard() {
       </div>
       <div className="content">
         <div className="header">Job List</div>
-        {items.map((data, i) => {
+        {jobList.map((data:any, i:number) => {
           return (
-            <div className="data">
+            <div key={i} className="data">
               <div className="left">
-                <p className="job-title">Data Engineer</p>
+                <p className="job-title">{data.title}</p>
                 <p>
-                  Trade Public - <span>Full Time</span>
+                  {data.company} - <span>{data.type}</span>
                 </p>
               </div>
               <div className="right">
-                <p>Berlin</p>
+                <p>{data.location}</p>
                 <p>1 day ago</p>
               </div>
             </div>
