@@ -1,0 +1,60 @@
+@use "./main.scss";
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: rgb(47, 201, 198);
+    .card{
+        background-color: pink;
+        width: 300px;
+        padding: 32px;
+        border-radius: 10px;
+        .title{
+            width: 100%;
+            text-align: center;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        form{
+            text-align: start;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            justify-content: center;
+            align-items: center;
+            div{
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                gap:10px
+            }
+            input{
+                border-radius: 5px;
+                height: 30px;
+            }
+            button{
+                border-radius: 5px;
+                color:white;
+                background-color: rgb(47, 201, 198);
+                padding: 8px;
+                font-size: 18px;
+                font-weight: 600;
+                cursor: pointer;
+                
+            }
+            small{
+                font-size: 12px;
+                span{
+                    cursor: pointer;
+                }
+                :hover{
+                    color:  white;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+}
