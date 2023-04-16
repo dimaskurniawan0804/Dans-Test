@@ -1,7 +1,8 @@
-import { GET_LIST_JOB } from "../actions/actionType";
+import { GET_JOB_DETAIL, GET_LIST_JOB } from "../actions/actionType";
 
 const jobState = {
   jobList: [],
+  jobDetail: {},
 };
 
 export function jobReducer(state = jobState, action: any) {
@@ -10,13 +11,15 @@ export function jobReducer(state = jobState, action: any) {
   switch (action.type) {
     case GET_LIST_JOB:
       return {
+        ...state,
         jobList: action.payload,
       };
-    // case REGISTER_USER:
-    //   return {
-    //     ...state,
-    //     isSuccessRegister: action.payload.isSuccessRegister,
-    //   };
+    case GET_JOB_DETAIL:
+      // console.log("REDUCER JOB DETAIL :", action.payload);
+      return {
+        ...state,
+        jobDetail: action.payload,
+      };
     default:
       return state;
   }

@@ -1,28 +1,33 @@
 import { useNavigate } from "react-router";
 import { logout } from "../store/actions/userActions";
 import { useSelector, useDispatch } from "react-redux";
-import { getJobList } from "../store/actions/jobActions";
-import "../style/Dashboard.scss";
+import { getJobList, getJobDetail } from "../store/actions/jobActions";
 import { useState, useEffect } from "react";
+import "../style/Dashboard.scss";
 
 export default function Dashboard() {
   const navigate = useNavigate();
   const {jobList} = useSelector((state:any)=>state.job)
+  const {jobDetail} = useSelector((state:any)=>state.job)
   const dispatch: any = useDispatch();
   const test = () => {
     navigate("/");
     dispatch(logout());
   };
-  const items = [1, 2, 3, 4, 5];
-  const [isJobListLoaded, setIsJobListLoaded] = useState(false);
+
+  // mounted
   useEffect(()=>{
     dispatch(getJobList())
   },[])
-  useEffect(()=>{
-    if(jobList.length > 0){
-        setIsJobListLoaded(true)
+
+const getDetailById = async (id:string)=>{
+    console.log(id)
+    const data = await dispatch(getJobDetail(id))
+    if(Object.keys(data.payload).length > 0){
+        navigate("/job-detail")
     }
-  },[jobList])
+  }
+
   return (
     <div id="dashboard">
       <div className="navbar">
@@ -51,7 +56,7 @@ export default function Dashboard() {
           return (
             <div key={i} className="data">
               <div className="left">
-                <p className="job-title">{data.title}</p>
+                <p className="job-title" onClick={()=>getDetailById(data.id)}>{data.title}</p>
                 <p>
                   {data.company} - <span>{data.type}</span>
                 </p>

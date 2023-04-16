@@ -1,4 +1,4 @@
-// @use "./main.scss";
+@use "./main.scss";
 
 #dashboard {
   display: flex;
@@ -110,6 +110,7 @@
         .job-title {
           font-size: 24px;
           color: rgb(37, 143, 196);
+          cursor: pointer;
         }
         span {
           color: green;
