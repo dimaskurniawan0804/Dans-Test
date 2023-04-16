@@ -56,11 +56,9 @@ export function getJobByQuery(options: any) {
     option += `?type=${options.type}`;
   }
 
-  console.log("🚀 ~ file: jobActions.ts:48 ~ getJobByQuery ~ options:", option);
   return async (dispatch: any) => {
     try {
       const { data } = await axios.get(`${baseUrl}/jobs/options${option}`);
-      console.log(data);
 
       return dispatch(updateListJobByQuery(data));
     } catch (error) {
