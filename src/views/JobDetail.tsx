@@ -41,7 +41,7 @@ export default function JobDetail() {
                     <p>1 Other Job</p>
                 </div>
                 <div className="image">
-                    <img src="https://img.freepik.com/free-vector/abstract-logo-flame-shape_1043-44.jpg" alt="" />
+                    <img src={jobDetail.company_logo} alt="" />
                     <a href={jobDetail.company_url}>{jobDetail.company_url}</a>
                 </div>
             </div>
